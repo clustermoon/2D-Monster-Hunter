@@ -8,65 +8,51 @@
 //------------------------------------------------------------------------------------------------------------
 #region |Local Vars|------------------------------------------------------------------------------------------
 
-	var hInput = pInput[0] - pInput[2];
-	var vInput = pInput[3] - pInput[1];
-	var move_xinput = 0;
-	var move_yinput = 0;
-	var last_key = keyboard_lastkey;
+	var rl_keys = keyboard_check(ord("D")) - keyboard_check(ord("A"));
+	var fb_keys = keyboard_check(ord("S")) - keyboard_check(ord("W"));
+	var col = oCollision;
 
 #endregion
 //------------------------------------------------------------------------------------------------------------
 #region |Movement & Collision|--------------------------------------------------------------------------------
 	
-
-	for(var i = 0; i < array_length_1d(pInput); i++){
-		var this_key = pInput[i];
-		if(keyboard_check(this_key)){
-			var this_angle =i*90;
-			var fspd = 1;
-			move_xinput += lengthdir_x(fspd, this_angle);
-			move_yinput += lengthdir_y(fspd, this_angle);
-		}
+	
+	fb_vel += fb_keys*accl;
+	rl_vel += rl_keys*accl;
+	
+	fb_vel = clamp(fb_vel, -spd, spd);
+	rl_vel = clamp(rl_vel, -spd, spd);
+	
+	if(fb_keys == 0 && abs(fb_vel) > 0){
+		fb_vel -= sign(fb_vel) * accl;
+	}
+	if(rl_keys == 0 && abs(rl_vel) > 0){
+		rl_vel -= sign(rl_vel) * accl;
 	}
 	
-	var moving = (point_distance(0, 0, move_xinput, move_yinput) > 0);
-	var move_dir = point_direction(0, 0, move_xinput, move_yinput);
-	if(moving){
-		spd = maxSpd;
+	if(!place_meeting(x + rl_vel, y, col)){
+		x += rl_vel;
 	}else{
-		spd = 0;
+		while(!place_meeting(x+sign(rl_vel), y, col)){
+			x += sign(rl_vel);	
+		}
+		rl_vel = 0;
 	}
 	
-	var rspd = spd*DELTA_FPS;
-	scr_playerMovment(rspd, move_dir);
+	if(!place_meeting(x, y + fb_vel, col)){
+		y += fb_vel;
+	}else{
+		while(!place_meeting(x, y + sign(fb_vel), col)){
+			y += sign(fb_vel);
+		}
+		fb_vel = 0;
+	}
+
 
 #endregion
 //------------------------------------------------------------------------------------------------------------
 #region |Animation|-------------------------------------------------------------------------------------------
-	//! does not work currently, only recognizes up, down, left, and right.
 
-	print_debug_message_start("Player-Step");
-	show_debug_message("player animation does not work currently, only recognizes up, down, left, and right");
-	print_name_id();
-	print_debug_message_end();
-	
-	if(!keyboard_check(vk_anykey)){ image_speed = 0; }else{image_speed = 0.2;}
-
-	if(pInput[2]){sprite_index = sPlayer_walk_Left;}
-	
-	if(pInput[2] && pInput[1]){sprite_index = sPlayer_walk_UpLeft; }
-
-	if(pInput[1]){sprite_index = sPlayer_walk_Up; }
-	
-	if(pInput[0] && pInput[1]){sprite_index = sPlayer_walk_UpRight; }
-
-	if(pInput[0]){sprite_index = sPlayer_walk_Right; }
-	
-	if(pInput[0] && pInput[3]){sprite_index = sPlayer_walk_DownRight; }
-	
-	if(pInput[3]){sprite_index = sPlayer_walk_Down; }
-	
-	if(pInput[2] && pInput[3]){sprite_index = sPlayer_walk_DownLeft; }
 
 
 #endregion

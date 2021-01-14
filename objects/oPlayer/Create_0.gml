@@ -3,10 +3,9 @@
 #region |Movement Vars|---------------------------------------------------------------------------------------
 
 	accl = 0.1;								//| variable to increment speed variable's value		 | Static
-	deccel = 0.05;							//| variable to decrement speed variable's value		 | Static
-	spd = 0;								//| variable to hold Speed variable value				 | Dynamic
-	maxSpd = 2;								//| variable to hold Max horizontal speed				 | Static
-
+	spd = 4;								//| variable to hold Speed variable value				 | Dynamic
+	fb_vel = 0;								//| variable to hold vertical Speed variable value		 | Dynamic
+	rl_vel = 0;								//| variable to hold horizontal Speed variable value	 | Dynamic
 	
 #endregion
 //------------------------------------------------------------------------------------------------------------

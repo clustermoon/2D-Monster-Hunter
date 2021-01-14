@@ -6,3 +6,8 @@
 
 #endregion
 //---------------------------------------------------------------------------------------------------------
+
+instance_create_layer(room_width/2, room_height/2, "Instances", oPlayer);
+instance_create_layer(0, 0, "Instances", oCamera);
+instance_create_layer(0, 0, "Instances", oDebug);
+instance_create_layer(0, 0, "Instances", oGUI);
