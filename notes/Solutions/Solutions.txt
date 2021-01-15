@@ -1,0 +1,4 @@
+_input 
+	scr_playerInput 11 : Recreate player input script
+	oPlayer ln 17 : Replace keyboard calls with player input array.
+	

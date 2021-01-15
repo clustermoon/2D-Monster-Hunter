@@ -2,6 +2,12 @@
 ///@arg type (0 - 2) type of player input
 ///@desc 0: All 1: wasd 2: arrows
 function scr_playerInput(type){
+	
+	print_debug_message_start();
+	print_name_id();
+	print_debug_message("Line: 11 - See Solutions _input.");
+	print_debug_message_end();
+	
 	switch(type){
 		case 1:
 			pInput[0] = (keyboard_check(ord("D")));																								//| set to All mode | left
